@@ -43,6 +43,6 @@ jobs:
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v6
         with:
-          branch: ${{ inputs.target-branch }}
+          base: ${{ inputs.target-branch }}
       
 
