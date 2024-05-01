@@ -13,6 +13,10 @@ on:
         required: false
         type: string
         default: ./requirements.txt
+      target-branch:
+        required: false
+        type: string
+        default: main
 
 jobs:
   unit-tests:
@@ -32,10 +36,13 @@ jobs:
           python -m pytest test
 
   create-pull-request:
+    needs: unit-tests
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v6
+        with:
+          branch: ${{ inputs.target-branch }}
       
 
