@@ -41,8 +41,8 @@ jobs:
         run: |
           prs=$(gh pr list \
               --repo "$GITHUB_REPOSITORY" \
-              --head main \
-              --base dev \
+              --head dev \
+              --base main \
               --json title  \
               --jq 'length' \
               -S "in:title Tested Pull Request Dev -> Main")
@@ -53,7 +53,7 @@ jobs:
         uses: peter-evans/create-pull-request@v6
         if: '!steps.check.outputs.skip'
         with:
-          branch: ${{ inputs.target-branch }}
-          base: dev
+          branch: dev
+          base: ${{ inputs.target-branch }}
           title: Tested Pull Request Dev -> Main
       
