@@ -30,14 +30,14 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install -r requirements.txt
+          pip install -r ${{ inputs.python-version }}
       - name: Run unit tests with pytest
         run: |
-          python -m pytest ${{ inputs.test-path }}
+          python -m pytest ${{ inputs.requirements-path }}
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v6
         with:
-          branch: main
+          branch: ${{ inputs.target-branch }}
           base: dev
           title: Tested Pull Request Dev -> Main
       
