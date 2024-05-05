@@ -36,4 +36,6 @@ jobs:
           python -m pytest test
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v6
+        with:
+          branch: main
       
