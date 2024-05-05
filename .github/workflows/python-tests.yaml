@@ -34,8 +34,24 @@ jobs:
       - name: Run unit tests with pytest
         run: |
           python -m pytest ${{ inputs.requirements-path }}
+      - name: Check if PR exists
+        id: check
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          prs=$(gh pr list \
+              --repo "$GITHUB_REPOSITORY" \
+              --head 'dev' \
+              --base 'master' \
+              --json Tested Pull Request Dev -> Main \
+              --jq 'length')
+          if ((prs > 0)); then
+              echo "skip=true" >> "$GITHUB_OUTPUT"
+          fi
+
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v6
+        if: '!steps.check.outputs.skip'
         with:
           branch: ${{ inputs.target-branch }}
           base: dev
