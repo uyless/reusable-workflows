@@ -42,11 +42,11 @@ jobs:
           prs=$(gh pr list \
               --repo "$GITHUB_REPOSITORY" \
               --head dev \
-              --base master \
+              --base main \
               --json title  \
               -S "in:title Tested Pull Request Dev -> Main")
           length=${#prs[@]}
-          if ((length > 0)); then
+          if [[ $length > 0 ]]; then
               echo "skip=true" >> "$GITHUB_OUTPUT"
           fi
       - name: Create Pull Request
