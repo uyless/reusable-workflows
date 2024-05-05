@@ -1,3 +1,5 @@
+name: Test code and create pull request
+
 on:
   workflow_call:
     inputs:
@@ -41,8 +43,8 @@ jobs:
         run: |
           prs=$(gh pr list \
               --repo "$GITHUB_REPOSITORY" \
-              --head dev \
-              --base main \
+              --head main \
+              --base dev \
               --json title  \
               --jq 'length' \
               -S "in:title Tested Pull Request Dev -> Main")
@@ -53,7 +55,7 @@ jobs:
         uses: peter-evans/create-pull-request@v6
         if: '!steps.check.outputs.skip'
         with:
-          branch: dev
-          base: ${{ inputs.target-branch }}
+          branch: ${{ inputs.target-branch }}
+          base: dev
           title: Tested Pull Request Dev -> Main
       
