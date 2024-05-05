@@ -43,7 +43,7 @@ jobs:
               --repo "$GITHUB_REPOSITORY" \
               --head 'dev' \
               --base 'master' \
-              --json { 'title': 'Tested Pull Request Dev -> Main' } \
+              --json "{ 'title': 'Tested Pull Request Dev -> Main' }" \
               --jq 'length')
           if ((prs > 0)); then
               echo "skip=true" >> "$GITHUB_OUTPUT"
